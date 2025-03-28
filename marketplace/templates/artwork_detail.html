@@ -1,0 +1,34 @@
+{% extends 'base.html' %} {# Inherit from your base template #}
+
+{% block title %}{{ artwork.title }} - Valientsketchooze{% endblock %} {# Set the page title #}
+
+{% block content %}
+  <div class="artwork-detail-container"> {# Optional container for styling #}
+
+    <h2>{{ artwork.title }}</h2>
+    <p>By: {{ artwork.artist.username }}</p>
+    <hr>
+
+    {% if artwork.image %}
+      {# Image will still be broken until Task 2.6 is done #}
+      <img src="{{ artwork.image.url }}" alt="{{ artwork.title }}" style="max-width: 70%; height: auto; display: block; margin: 20px auto;">
+    {% else %}
+      <p>[No Image Available]</p>
+    {% endif %}
+
+    <h3>Description</h3>
+    {# Use linebreaksbr filter to respect line breaks in the description text #}
+    <p>{{ artwork.description|linebreaksbr }}</p>
+
+    <h3>Price: ₹{{ artwork.price|floatformat:2 }}</h3>
+
+    {# Placeholder for where the 'Buy Now' button will go later #}
+    <div style="margin-top: 20px; padding: 15px; background-color: #f0f0f0; border: 1px solid #ddd;">
+        Purchase options will appear here (Sprint 3+).
+    </div>
+
+    <hr style="margin-top: 30px;">
+    <p><a href="{% url 'marketplace:home' %}"> &laquo; Back to Gallery</a></p> {# Link back to the homepage/gallery #}
+
+  </div>
+{% endblock %}

@@ -136,17 +136,20 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # Creates a 'media' folder in project root for uploads
 
 TEMPLATES = [
-{
-'BACKEND': 'django.template.backends.django.DjangoTemplates',
-'DIRS': [],
-'APP_DIRS': True,
-'OPTIONS': {
-'context_processors': [
-'django.template.context_processors.debug',
-'django.template.context_processors.request', # Make sure this one is present
-'django.contrib.auth.context_processors.auth', # Make sure this one is present
-'django.contrib.messages.context_processors.messages', # Make sure this one is present
-],
-},
-},
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')], # <<< Make sure this line exists and is correct
+        'APP_DIRS': True, # This should usually be True as well
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
 ]
+
+LOGIN_REDIRECT_URL = '/' # Redirect to homepage after login
+LOGOUT_REDIRECT_URL = '/' # Redirect to homepage after logout
