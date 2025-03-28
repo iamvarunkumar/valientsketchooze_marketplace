@@ -1,13 +1,17 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>{% block title %}Valientsketchooze{% endblock %}</title>
     </head>
 <body>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <nav>
         <a href="/">Home</a> |
         {% if user.is_authenticated %}
-            Logged in as: {{ user.username }} |
+            <span class="auth-info">
+                Logged in as: {{ user.username }} |
+            </span>
             <form action="{% url 'logout' %}" method="post" style="display: inline;">
     {% csrf_token %} {# Important security token #}
     <button type="submit" style="background:none; border:none; padding:0; color:blue; text-decoration:underline; cursor:pointer; font-family: inherit; font-size: inherit;">

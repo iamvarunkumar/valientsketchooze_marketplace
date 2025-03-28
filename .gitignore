@@ -82,4 +82,4 @@ venv.bak/
 .vscode/
 *.sublime-project
 *.sublime-workspace
-*.DS_Store
+*.DS_Storeclear

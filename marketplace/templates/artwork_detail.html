@@ -6,7 +6,7 @@
   <div class="artwork-detail-container"> {# Optional container for styling #}
 
     <h2>{{ artwork.title }}</h2>
-    <p>By: {{ artwork.artist.username }}</p>
+    <p class="artist-credit">By: {{ artwork.artist.username }}</p>
     <hr>
 
     {% if artwork.image %}
@@ -28,7 +28,7 @@
     </div>
 
     <hr style="margin-top: 30px;">
-    <p><a href="{% url 'marketplace:home' %}"> &laquo; Back to Gallery</a></p> {# Link back to the homepage/gallery #}
+    <p class="back-link"><a href="{% url 'marketplace:home' %}"> &laquo; Back to Gallery</a></p> {# Link back to the homepage/gallery #}
 
   </div>
 {% endblock %}
