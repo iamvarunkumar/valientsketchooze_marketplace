@@ -1,27 +1,56 @@
 {% extends 'base.html' %}
-{% block title %}Artwork Gallery{% endblock %}
-{% block content %}
-  <h2>Gallery</h2>
 
-  {% if artworks %}
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px;"> {# Basic grid layout #}
+{% block title %}Valientsketchooze - Digital Art Marketplace{% endblock %}
+
+{% block content %}
+
+{# --- NEW HERO SECTION START --- #}
+<section class="hero-section text-center mb-5"> {# text-center for content alignment, mb-5 for margin below #}
+    <div class="container"> {# Optional: Constrain width if needed #}
+        {# Placeholder for background sketch - often done with CSS background-image #}
+        {# <img src="{% static 'path/to/your/hero-sketch.jpg' %}" alt="Hero background sketch" class="hero-background-sketch"> #}
+
+        <div class="hero-content"> {# Wrapper for text/button #}
+            {# Use display classes for heading size #}
+            <h1 class="display-4 fw-bold hero-title">Valientsketchooze Art</h1>
+            <p class="lead hero-subtitle mb-4">Unique digital sketches and illustrations.</p>
+            {# Example Button - Link to gallery or specific page #}
+            <a href="#gallery" class="btn btn-dark btn-lg hero-button">Explore Artwork</a>
+             {# Placeholder for the illustration on the right (could also use columns) #}
+             {# <img src="{% static 'path/to/your/hero-illustration.png' %}" alt="Illustration" class="hero-illustration"> #}
+        </div>
+    </div>
+</section>
+{# --- NEW HERO SECTION END --- #}
+
+{# Separator (Optional) #}
+{# <hr class="my-5"> #}
+
+{# Existing Gallery Section - Add id="gallery" if using the button link above #}
+<h2 class="text-center mb-4" id="gallery">Gallery</h2> {# Added ID #}
+
+{% if artworks %}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 gallery-container"> {# Added gallery-container class back #}
       {% for artwork in artworks %}
-        <div class="artwork-card" style="border: 1px solid #ccc; padding: 10px; text-align: center;">
-          <a href="{% url 'marketplace:artwork_detail' artwork.pk %}"> {# Link to detail page (URL defined later) #}
-            {% if artwork.image %}
-              <img src="{{ artwork.image.url }}" alt="{{ artwork.title }}" style="max-width: 100%; height: auto; max-height: 200px;">
-            {% else %}
-              <p>[No Image Available]</p>
-            {% endif %}
-            <h3>{{ artwork.title }}</h3>
-          </a>
-          <p>Price: ₹{{ artwork.price|floatformat:2 }}</p> {# Format price #}
-          {# <p>Artist: {{ artwork.artist.username }}</p> #} {# Optional artist name #}
+        <div class="col">
+          <div class="card h-100 shadow-sm">
+            <a href="{% url 'marketplace:artwork_detail' artwork.pk %}" class="text-decoration-none text-dark">
+              {% if artwork.image %}
+                <img src="{{ artwork.image.url }}" class="card-img-top" alt="{{ artwork.title }}" style="height: 250px; object-fit: cover;">
+              {% else %}
+                <div class="card-img-top d-flex align-items-center justify-content-center bg-light text-muted" style="height: 250px;">No Image</div>
+              {% endif %}
+              <div class="card-body">
+                <h5 class="card-title">{{ artwork.title }}</h5>
+                <p class="card-text fw-bold">₹{{ artwork.price|floatformat:2 }}</p>
+              </div>
+            </a>
+          </div>
         </div>
       {% endfor %}
     </div>
-  {% else %}
-    <p>No artworks available yet. Check back soon!</p>
-  {% endif %}
+{% else %}
+    <p class="text-center">No artworks are currently available. Please check back soon!</p>
+{% endif %}
 
 {% endblock %}

@@ -1,34 +1,72 @@
-{% extends 'base.html' %} {# Inherit from your base template #}
+{% extends 'base.html' %}
 
-{% block title %}{{ artwork.title }} - Valientsketchooze{% endblock %} {# Set the page title #}
+{% block title %}{{ artwork.title }} - Valientsketchooze{% endblock %}
 
 {% block content %}
-  <div class="artwork-detail-container"> {# Optional container for styling #}
+<div class="artwork-detail-page">
+    <div class="row g-lg-5"> {# Larger gutter on large screens #}
 
-    <h2>{{ artwork.title }}</h2>
-    <p class="artist-credit">By: {{ artwork.artist.username }}</p>
-    <hr>
+        {# --- Left Column: Image & Extra Info --- #}
+        <div class="col-lg-7"> {# Adjusted breakpoint to lg for potentially wider image #}
+            <div class="image-section mb-4">
+                {% if artwork.image %}
+                    <img src="{{ artwork.image.url }}" alt="{{ artwork.title }}" class="img-fluid rounded artwork-detail-image shadow-sm"> {# Added subtle shadow #}
+                {% else %}
+                    <div class="d-flex align-items-center justify-content-center bg-light text-muted" style="height: 400px; border: 1px dashed #ccc;">[No Image Available]</div>
+                {% endif %}
+            </div>
 
-    {% if artwork.image %}
-      {# Image will still be broken until Task 2.6 is done #}
-      <img src="{{ artwork.image.url }}" alt="{{ artwork.title }}" style="max-width: 70%; height: auto; display: block; margin: 20px auto;">
-    {% else %}
-      <p>[No Image Available]</p>
-    {% endif %}
+            {# --- NEW: Section below image --- #}
+            <div class="extra-info-section mt-4">
+                <div class="d-flex align-items-center mb-2">
+                     {# Placeholder for heart icon - replace with <i> tag from icon library #}
+                    <span class="heart-icon me-2 fs-4" style="color: #dc3545;">♥</span>
+                    <h5 class="mb-0">Favourite</h5> {# Placeholder text from image #}
+                </div>
+                <p class="text-muted small">
+                    {# Placeholder text from image #}
+                </p>
+            </div>
+            {# --- End Section below image --- #}
 
-    <h3>Description</h3>
-    {# Use linebreaksbr filter to respect line breaks in the description text #}
-    <p>{{ artwork.description|linebreaksbr }}</p>
+        </div>
 
-    <h3>Price: ₹{{ artwork.price|floatformat:2 }}</h3>
+        {# --- Right Column: Details & Actions --- #}
+        <div class="col-lg-5">
+            <div class="artwork-details-text sticky-lg-top" style="top: 20px;"> {# Make details sticky on large screens #}
+                <h1 class="artwork-title mb-1">{{ artwork.title }}</h1>
+                 {# Add subtitle/tagline if available in model, placeholder for now #}
+                 <p class="text-muted artwork-subtitle mb-3">🖋️ - @valientsketchooze (?)</p>
 
-    {# Placeholder for where the 'Buy Now' button will go later #}
-    <div style="margin-top: 20px; padding: 15px; background-color: #f0f0f0; border: 1px solid #ddd;">
-        Purchase options will appear here (Sprint 3+).
-    </div>
+                <p class="artwork-description mb-4">{{ artwork.description|default:"No description available."|linebreaksbr }}</p>
 
-    <hr style="margin-top: 30px;">
-    <p class="back-link"><a href="{% url 'marketplace:home' %}"> &laquo; Back to Gallery</a></p> {# Link back to the homepage/gallery #}
+                {# Variants/Options - Placeholder Section #}
+                <div class="variants-section mb-4">
+                    <p class="text-muted small mb-1">Tags 🏷️</p>
+                     {# Example using Bootstrap badges styled as buttons #}
+                    <span class="badge rounded-pill text-bg-light border me-1 p-2 px-3 variant-tag">Japanese Dragon</span>
+                    <span class="badge rounded-pill text-bg-light border me-1 p-2 px-3 variant-tag">Digital Art</span>
+                    <span class="badge rounded-pill text-bg-light border me-1 p-2 px-3 variant-tag">Black&White</span>
+                </div>
+                 {# Indicator Dots - Placeholder #}
+                 {% comment %} <p class="text-muted text-center mb-4">.....</p> {% endcomment %}
 
-  </div>
+                {# Add to Cart Button (Styled like example) #}
+                <div class="d-grid gap-2">
+                  <button type="button" class="btn btn-dark btn-lg add-to-cart-button">
+                      Add to Cart 🛒
+                      {# Add icon here later e.g., <i class="bi bi-arrow-right ms-2"></i> #}
+                      <span class="ms-2">→</span> {# Simple arrow placeholder #}
+                  </button>
+                </div>
+
+                 <div class="mt-4 text-center">
+                     <a href="{% url 'marketplace:home' %}" class="text-muted small text-decoration-none">&laquo; Back to Gallery</a>
+                 </div>
+
+            </div>
+        </div>
+
+    </div> {# End .row #}
+</div> {# End .artwork-detail-page #}
 {% endblock %}

@@ -18,20 +18,14 @@ def signup(request):
 
 # Add a placeholder for home view if needed by base.html link
 def home(request):
-    artworks = Artwork.objects.all() # Fetch artworks
-    # CORRECTED LINE: Render 'home.html' (or 'gallery.html') and pass context
+    artworks = Artwork.objects.all()
+    print("Artworks fetched in home view:", artworks) # <-- ADD PRINT
     return render(request, 'home.html', {'artworks': artworks})
 
 def artwork_detail(request, pk):
-    # Retrieve the specific artwork object using its primary key (pk)
-    # If not found, automatically raises a 404 Page Not Found error
     artwork_obj = get_object_or_404(Artwork, pk=pk)
-
-    # Prepare the context dictionary to pass the artwork object to the template
-    context = {
-        'artwork': artwork_obj
-    }
-    # Render the detail template, passing the context
+    print("Artwork fetched in detail view:", artwork_obj) # <-- ADD PRINT
+    context = {'artwork': artwork_obj}
     return render(request, 'artwork_detail.html', context)
 
 # Add home view to marketplace/urls.py: path('', views.home, name='home')

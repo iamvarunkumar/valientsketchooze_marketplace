@@ -1,156 +1,414 @@
-/* static/css/style.css */
+/* static/css/styles.css */
+
+/* General Body & Typography */
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     margin: 0;
     padding: 0;
-    background-color: #f8f9fa;
-    color: #333;
+    background-color: #f8f9fa; /* Light background */
+    color: #212529; /* Darker text */
     line-height: 1.6;
 }
 
-nav {
-    background-color: #fff;
-    padding: 10px 20px;
-    border-bottom: 1px solid #dee2e6;
-    margin-bottom: 30px;
-    display: flex; /* Use flexbox for alignment */
-    align-items: center; /* Vertically center items */
+/* Basic Reset & Box Sizing */
+*, *::before, *::after {
+    box-sizing: border-box;
 }
 
-nav a, nav form {
-    margin-right: 15px;
+/* Navigation */
+nav {
+    background-color: #ffffff;
+    padding: 10px 5%; /* Use percentage for padding */
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 30px;
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+    align-items: center;
+    gap: 15px; /* Space between nav items */
+}
+
+nav a {
     color: #007bff;
     text-decoration: none;
+    padding: 5px 0; /* Add some padding */
 }
 nav a:hover {
     text-decoration: underline;
 }
- /* Reset button style to look like link */
+
+nav .logo a { /* Assuming logo is a link */
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #343a40;
+    text-decoration: none;
+}
+
+/* Style for the logout button-link */
 nav form button {
     background: none;
     border: none;
-    padding: 0;
+    padding: 5px 0; /* Match link padding */
     color: #007bff;
     text-decoration: none;
     cursor: pointer;
     font-family: inherit;
     font-size: inherit;
+    display: inline; /* Keep it inline */
 }
 nav form button:hover {
     text-decoration: underline;
 }
- nav .auth-info { /* Add class="auth-info" around logged in text */
-     margin-left: auto; /* Push auth info to the right */
-     color: #6c757d;
- }
- nav .auth-info form {
-     margin-left: 10px;
- }
 
-
-main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+/* Push auth info to the right */
+nav .auth-section {
+    margin-left: auto; /* Pushes this section to the end */
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between auth items */
+}
+nav .auth-section span { /* Style for 'Logged in as...' text */
+    color: #6c757d;
 }
 
-/* Gallery Grid */
+
+/* Main Content Area */
+main {
+    max-width: 1400px; /* Wider max-width */
+    margin: 0 auto; /* Center content */
+    padding: 0 20px; /* Padding on sides */
+}
+
+main h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #343a40;
+}
+
+/* Responsive Gallery Grid */
 .gallery-container {
     display: grid;
-    /* Responsive grid: columns are at least 250px wide, auto-fill */
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 25px; /* Space between grid items */
+    /* Creates responsive columns:
+       - auto-fill: As many columns as fit.
+       - minmax(280px, 1fr): Each column is at least 280px wide,
+         and they share extra space (1fr). */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px; /* Increased gap */
 }
 
+/* Artwork Card Styling */
 .artwork-card {
     border: 1px solid #dee2e6;
-    border-radius: 4px;
-    padding: 15px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    transition: box-shadow 0.2s ease-in-out;
-    text-align: center;
+    border-radius: 5px; /* Slightly more rounded */
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.07);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    overflow: hidden; /* Hide overflowing parts if image aspect ratio differs */
+    display: flex; /* Use flexbox for vertical alignment */
+    flex-direction: column; /* Stack items vertically */
 }
 .artwork-card:hover {
-     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transform: translateY(-5px); /* Slight lift effect */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.artwork-card a { /* Link covers image and title */
+    text-decoration: none;
+    color: inherit;
+    display: block; /* Make link a block */
 }
 
 .artwork-card img {
-    max-width: 100%;
-    height: 220px; /* Consistent height */
-    object-fit: cover; /* Cover area without distorting */
-    margin-bottom: 15px;
-    border-radius: 3px;
+    display: block; /* Remove extra space below image */
+    width: 100%; /* Make image fill card width */
+    height: 250px; /* Fixed height */
+    object-fit: cover; /* Cover area, potentially cropping */
 }
 
 .artwork-card h3 {
-    margin: 10px 0 5px 0;
-    font-size: 1.15em;
+    margin: 15px 10px 5px 10px;
+    font-size: 1.1em;
     font-weight: 600;
-}
-.artwork-card a {
-    text-decoration: none;
-    color: inherit; /* Inherit color from parent */
+    color: #343a40;
 }
 .artwork-card a:hover h3 {
-    color: #0056b3; /* Darker blue on hover */
+    color: #0056b3;
 }
-.artwork-card p {
+
+.artwork-card p { /* Price */
+    margin: 0 10px 15px 10px;
     color: #495057;
+    font-weight: bold;
+    font-size: 1.05em;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px;
+    border-top: 1px solid #dee2e6;
+    color: #6c757d;
+    font-size: 0.9em;
+}
+footer a {
+    color: #6c757d;
+    margin: 0 10px;
+}
+
+/* Basic Responsive Adjustments (Example) */
+@media (max-width: 768px) {
+    nav {
+        padding: 10px 3%;
+        gap: 10px;
+    }
+    nav .auth-section { /* Stack auth items below on small screens if needed */
+        margin-left: 0;
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
+    }
+    main {
+        padding: 0 15px;
+    }
+    .gallery-container {
+        gap: 15px;
+        /* Adjust minmax if needed for smaller screens */
+         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-container {
+        /* Single column on very small screens */
+        grid-template-columns: 1fr;
+    }
+    nav { /* Adjust nav further if needed */
+       justify-content: center;
+    }
+    nav .logo a {
+        margin-bottom: 10px;
+    }
+}
+
+
+/* Detail Page adjustments could go here too */
+.artwork-detail-container img {
+    max-width: 90%; /* Allow slightly larger on detail */
+}
+
+/* Minimalist adjustments for detail page */
+.artwork-detail-page .artwork-details-text {
+    /* Add padding or adjust alignment if needed */
+    padding-top: 20px; /* Example: Add some space at the top */
+}
+
+.artwork-detail-page .artwork-title {
+    font-size: 2.5rem; /* Larger title */
+    font-weight: 600; /* Or bolder/lighter depending on desired font */
+    margin-bottom: 0.5rem !important; /* Reduce default Bootstrap margin */
+}
+
+.artwork-detail-page .artwork-artist {
+    font-size: 1rem;
+    margin-bottom: 1.5rem !important; /* Space below artist */
+}
+
+.artwork-detail-page .artwork-description {
+    font-size: 0.95rem;
+    color: #555; /* Slightly lighter text */
+    line-height: 1.7;
+}
+
+.artwork-detail-page .artwork-price {
+    font-weight: bold;
+    color: #000; /* Black price */
+    margin-top: 2rem;
+    margin-bottom: 2rem !important;
+}
+
+.artwork-detail-page .artwork-detail-image {
+   max-height: 80vh; /* Limit image height */
+   width: auto;
+   object-fit: contain; /* Ensure whole image is visible */
+   margin: 0 auto; /* Center if column is wider */
+}
+
+
+/* Attempting the minimal button style */
+.artwork-detail-page .btn-buy-now {
+    background-color: #fff !important; /* White background */
+    color: #000 !important; /* Black text */
+    border: 1px solid #000 !important; /* Black border */
+    border-radius: 0 !important; /* Sharp corners */
+    padding: 10px 20px !important; /* Adjust padding */
+    text-transform: uppercase; /* Match example */
+    font-weight: 600; /* Match example */
+    letter-spacing: 0.05em; /* Match example */
+    transition: background-color 0.2s, color 0.2s; /* Smooth hover */
+}
+
+.artwork-detail-page .btn-buy-now:hover {
+    background-color: #000 !important; /* Black background on hover */
+    color: #fff !important; /* White text on hover */
+}
+
+/* Adjustments for smaller screens if needed */
+@media (max-width: 767px) {
+    .artwork-detail-page .artwork-details-text {
+        padding-top: 0; /* Remove top padding */
+        margin-top: 30px; /* Add margin above text */
+        text-align: center; /* Center text on small screens */
+    }
+     .artwork-detail-page .artwork-detail-image {
+         max-height: 60vh; /* Adjust image height */
+     }
+     .artwork-detail-page .d-grid { /* Prevent button being full width */
+         display: inline-block !important;
+         width: auto;
+     }
+     .artwork-detail-page .btn-buy-now {
+        padding: 8px 16px !important; /* Smaller padding */
+     }
+}
+
+.hero-section {
+    background-color: #f8f9fa; /* Light background like example, or set background-image */
+    /* background-image: url('../images/your-hero-sketch.jpg'); /* Example background image */
+    /* background-size: cover; */
+    /* background-position: center; */
+    padding: 6rem 0; /* Generous padding top and bottom */
+    position: relative; /* Needed if using absolute positioning for illustration */
+    overflow: hidden; /* Hide parts of illustration if needed */
+}
+
+.hero-section .hero-content {
+    position: relative; /* To allow z-index if needed over background */
+    z-index: 2;
+    max-width: 600px; /* Limit width of text block */
+    margin: 0 auto; /* Center the text block */
+}
+
+/* Example styling for illustration if using img tag inside hero-content */
+/* .hero-section .hero-illustration {
+    position: absolute;
+    right: 5%;
+    bottom: 10%;
+    max-width: 300px;
+    opacity: 0.8;
+} */
+
+.hero-section .hero-title {
+    color: #212529;
+    margin-bottom: 0.75rem;
+}
+
+.hero-section .hero-subtitle {
+    color: #495057;
+    font-size: 1.25rem; /* Bootstrap 'lead' class size */
+}
+
+.hero-section .hero-button {
+    border-radius: 50px; /* Make button pill-shaped */
+    padding: 12px 30px; /* Larger padding */
+    font-weight: 600;
+    background-color: #343a40; /* Dark button */
+    border-color: #343a40;
+    transition: background-color 0.2s ease;
+}
+
+.hero-section .hero-button:hover {
+    background-color: #212529; /* Darker on hover */
+    border-color: #212529;
+}
+
+/* Ensure gallery container still uses the correct class if needed */
+.gallery-container {
+    /* Styles from previous step */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 4rem 0;
+        text-align: center; /* Ensure text center aligns */
+    }
+     .hero-section .hero-title {
+        font-size: 2.5rem; /* Slightly smaller title */
+    }
+     .hero-section .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    /* Hide side illustration on small screens if using absolute positioning */
+    /* .hero-section .hero-illustration { display: none; } */
+}
+
+/* Further Additions to static/css/styles.css for New Artwork Detail Page */
+
+/* Refinements from previous step might be needed */
+.artwork-detail-page .artwork-title {
+    font-size: 2.2rem; /* Adjust size */
+}
+.artwork-detail-page .artwork-artist {
+    /* Renamed class in HTML if needed */
+}
+.artwork-detail-page .artwork-subtitle {
+     font-size: 1.1rem;
+}
+
+
+/* Image styling */
+.artwork-detail-page .artwork-detail-image {
+   border: 1px solid #eee; /* Add subtle border like example */
+   box-shadow: 0 4px 10px rgba(0,0,0,0.08); /* Example shadow */
+}
+
+/* Section below image */
+.artwork-detail-page .extra-info-section {
+    margin-top: 2.5rem;
+}
+.artwork-detail-page .heart-icon {
+    /* Style your heart icon if using font */
+}
+.artwork-detail-page .extra-info-section h5 {
+     font-weight: 600;
+}
+
+/* Variant Tags styling */
+.artwork-detail-page .variants-section .variant-tag {
+    cursor: pointer;
+    border-color: #ccc !important; /* Ensure border visible */
+    color: #555 !important; /* Darker text */
+    background-color: #fff !important; /* White background */
     font-weight: 500;
 }
+.artwork-detail-page .variants-section .variant-tag:hover {
+    background-color: #f0f0f0 !important;
+}
 
-/* Detail Page */
-.artwork-detail-container {
-    background-color: #fff;
-    padding: 20px 30px;
-    border: 1px solid #dee2e6;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+/* Add to Cart Button (like "Sooa To Cort") */
+.artwork-detail-page .add-to-cart-button {
+    background-color: #212529 !important; /* Dark background */
+    color: #fff !important; /* White text */
+    border: none !important; /* No border */
+    border-radius: 50px !important; /* Pill shape */
+    padding: 12px 25px !important; /* Adjust padding */
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    transition: background-color 0.2s ease;
 }
-.artwork-detail-container img {
-    max-width: 100%; /* Responsive image */
-    max-height: 70vh; /* Limit height */
-    width: auto; /* Maintain aspect ratio */
-    height: auto; /* Maintain aspect ratio */
-    display: block;
-    margin: 20px auto;
-    border: 1px solid #eee;
-    border-radius: 3px;
-}
-.artwork-detail-container h2 {
-    text-align: center;
-    margin-bottom: 5px;
-}
-.artwork-detail-container p.artist-credit { /* Add class="artist-credit" to the p tag */
-    text-align: center;
-    margin-top: 0;
-    color: #6c757d;
-    font-style: italic;
-}
-.artwork-detail-container h3 {
-    margin-top: 25px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 5px;
-}
-.back-link { /* Add class="back-link" to the p tag with the link */
-    margin-top: 30px;
-}
-.back-link a {
-     text-decoration: none;
-     color: #007bff;
-}
- .back-link a:hover {
-     text-decoration: underline;
- }
 
-/* Placeholder for Buy Button Area */
-.purchase-box {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #e9ecef;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    text-align: center;
-    color: #6c757d;
+.artwork-detail-page .add-to-cart-button:hover {
+    background-color: #495057 !important; /* Slightly lighter dark on hover */
+}
+
+/* Sticky column for details on large screens */
+@media (min-width: 992px) { /* Corresponds to lg breakpoint */
+    .artwork-details-text.sticky-lg-top {
+        position: sticky;
+        top: 20px; /* Adjust distance from top */
+        z-index: 1000; /* Ensure it stays on top */
+    }
 }
