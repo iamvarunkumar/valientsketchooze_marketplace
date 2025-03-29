@@ -51,14 +51,19 @@
                  {# Indicator Dots - Placeholder #}
                  {% comment %} <p class="text-muted text-center mb-4">.....</p> {% endcomment %}
 
-                {# Add to Cart Button (Styled like example) #}
-                <div class="d-grid gap-2">
-                  <button type="button" class="btn btn-dark btn-lg add-to-cart-button">
-                      Add to Cart 🛒
-                      {# Add icon here later e.g., <i class="bi bi-arrow-right ms-2"></i> #}
+                <form action="{% url 'marketplace:initiate_payment' %}" method="post" class="d-grid gap-2"> {# Form submits via POST to the payment URL #}
+                  {% csrf_token %} {# Essential Django security token #}
+
+                  {# Hidden input to send the ID of the current artwork to the backend #}
+                  <input type="hidden" name="artwork_id" value="{{ artwork.id }}">
+
+                  {# The submit button, styled like your previous placeholder #}
+                  <button type="submit" class="btn btn-dark btn-lg add-to-cart-button">
+                      Buy Now {# Updated button text #}
                       <span class="ms-2">→</span> {# Simple arrow placeholder #}
+                      {# Add icon here later e.g., <i class="bi bi-arrow-right ms-2"></i> #}
                   </button>
-                </div>
+              </form>
 
                  <div class="mt-4 text-center">
                      <a href="{% url 'marketplace:home' %}" class="text-muted small text-decoration-none">&laquo; Back to Gallery</a>

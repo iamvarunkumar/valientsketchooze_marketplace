@@ -10,4 +10,5 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'), # Signup page
     # Add artwork_detail path later:
     path('artwork/<int:pk>/', views.artwork_detail, name='artwork_detail'),
+    path('payment/initiate/', views.initiate_payment, name='initiate_payment'),
 ]

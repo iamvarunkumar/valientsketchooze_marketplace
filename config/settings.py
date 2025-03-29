@@ -145,3 +145,13 @@ TEMPLATES = [
 
 LOGIN_REDIRECT_URL = '/' # Redirect to homepage after login
 LOGOUT_REDIRECT_URL = '/' # Redirect to homepage after logout
+
+
+# Payment Gateway Configuration
+
+RAZORPAY_KEY_ID = os.getenv('RAZORPAY_KEY_ID')
+RAZORPAY_KEY_SECRET = os.getenv('RAZORPAY_KEY_SECRET')
+
+# Add checks later to ensure these are loaded, especially in production
+if not RAZORPAY_KEY_ID or not RAZORPAY_KEY_SECRET:
+    print("WARNING: Payment gateway keys not configured!") # Or raise ImproperlyConfigured

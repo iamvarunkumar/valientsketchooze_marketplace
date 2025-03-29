@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %} {# Ensure static is loaded if extending base #}
+
+{% block title %}Processing Payment{% endblock %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <h2>Processing Payment...</h2>
+    <p>Please wait while we redirect you to the payment gateway.</p>
+    {# Optional: Add a spinner/loading animation later #}
+
+    {# --- Razorpay Integration --- #}
+    {# 1. Include Razorpay Checkout Script (Verify URL from Razorpay Docs) #}
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    {# 2. Add JavaScript to Initialize and Open Checkout #}
+    <script>
+        // Options object passed to Razorpay Checkout
+        var options = {
+            "key": "{{ razorpay_key_id }}", // Your Razorpay Key ID from settings
+            "amount": "{{ amount }}", // Amount in smallest currency unit (paisa) passed from view
+            "currency": "{{ currency }}", // Currency code (e.g., "INR")
+            "name": "Valientsketchooze", // Your Brand Name
+            "description": "Artwork Purchase: {{ artwork_title|escapejs }}", // Transaction description
+            // "image": "{% static 'images/your_logo.png' %}", // Optional: Link to your logo
+            "order_id": "{{ razorpay_order_id }}", // Razorpay Order ID passed from view
+
+            // --- IMPORTANT: Callback Handler (Sprint 4) ---
+            // This function gets called *after* payment attempt.
+            // For Sprint 3, we just log it. In Sprint 4, this needs to
+            // send payment details (payment_id, order_id, signature)
+            // back to your server for verification.
+            "handler": function (response){
+                console.log("Razorpay Response:", response);
+                alert("Payment processing initiated. Verification pending. Payment ID: " + response.razorpay_payment_id);
+                // Redirect to a pending/success page (or handle via AJAX) in Sprint 4
+                // For now, maybe redirect home after alert
+                // window.location.href = "{% url 'marketplace:home' %}";
+
+                // !! DO NOT TRUST this response alone for fulfillment !!
+                // Server-side verification via webhook or callback URL is essential (Sprint 4)
+            },
+
+            // Prefill user details (Optional but Recommended)
+            "prefill": {
+                "name": "{{ user_name|escapejs }}",
+                "email": "{{ user_email|escapejs }}",
+                "contact": "{{ user_contact|escapejs }}" // Phone number if available
+            },
+            "notes": {
+                // Any additional notes you passed when creating the order
+                // (e.g., artwork_id - already have it via local Order object)
+            },
+            "theme": {
+                "color": "#3399cc" // Optional theme color
+            },
+
+            // Optional: Function called if the user closes the checkout modal
+            "modal": {
+                "ondismiss": function(){
+                    console.log('Checkout form closed by user');
+                    alert('Payment cancelled.');
+                    // Redirect back to detail page or homepage?
+                    window.location.href = "{% url 'marketplace:artwork_detail' artwork.id %}"; // Redirect back to artwork
+                }
+            }
+        };
+
+        // Create Razorpay instance and open checkout
+        try {
+            var rzp = new Razorpay(options);
+            rzp.open(); // Open the checkout modal immediately
+
+            // Optional: Handle potential errors during checkout initialization/opening
+            rzp.on('payment.failed', function (response){
+                    console.error("Razorpay Payment Failed:", response);
+                    alert("Payment Failed: " + response.error.description + " (Code: " + response.error.code + ")");
+                    // Redirect to a failure page or back to artwork detail
+                    window.location.href = "{% url 'marketplace:artwork_detail' artwork.id %}";
+            });
+        } catch(err) {
+            console.error("Error initializing Razorpay:", err);
+            alert("Could not initialize payment gateway. Please try again later.");
+             window.location.href = "{% url 'marketplace:artwork_detail' artwork.id %}";
+        }
+
+    </script>
+    {# --- End Razorpay Integration --- #}
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{# We put the script directly in the content block for simplicity, #}
+{# but complex JS could go here #}
+{% endblock %}
